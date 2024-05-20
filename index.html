@@ -185,22 +185,7 @@
 </div>
     
 
-
-
-
-
-
-
-
-    
-</body>
-<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
-  <!-- Funciones js-->    
-
-
-  <script>
+<script>
     // TODO: Replace the following with your app's Firebase project configuration
 // See: https://support.google.com/firebase/answer/7015592
 const firebaseConfig = {
@@ -217,8 +202,10 @@ firebase.initializeApp(firebaseConfig);
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = firebase.firestore();
+</script>
 
-function guardar()
+<script>
+    function guardar()
 {
     var combogen = document.getElementById("genero_libro");
     var combodis = document.getElementById("Disponibilidad_libro");
@@ -297,69 +284,16 @@ function verTabla() {
         });
     });
 }
-
-
-
-function editLibro(id) {
-    const libroDoc = db.collection("Libros").doc(id);
-    libroDoc.get().then((doc) => {
-        if (doc.exists) {
-            const libro = doc.data();
-            document.getElementById('libro-id').value = id;
-            document.getElementById('nombre-libro').value = libro.nombre_libro;
-            document.getElementById('autor-libro').value = libro.autor_libro;
-            document.getElementById('idioma-libro').value = libro.Idioma;
-            document.getElementById('descripcion-libro').value = libro.descripcion_libro;
-            document.getElementById('editorial-libro').value = libro.editorial_libro;
-            document.getElementById('fechaP-libro').value = libro.fechaP_libro;
-            document.getElementById('genero-libro').value = libro.genero_libro;
-            document.getElementById('disponibilidad-libro').value = libro.Disponibilidad_libro;
-            document.getElementById('paginasN-libro').value = libro.paginasN_libro;
-            $('#updateModal').modal('show');
-             
-        }
-    });
-}
-
-
-function updateLibro() {
-    const id = document.getElementById('libro-id').value;
-    const libroActualizado = {
-        nombre_libro: document.getElementById('nombre-libro').value,
-        autor_libro: document.getElementById('autor-libro').value,
-        Idioma: document.getElementById('idioma-libro').value,
-        descripcion_libro: document.getElementById('descripcion-libro').value,
-        editorial_libro: document.getElementById('editorial-libro').value,
-        fechaP_libro: document.getElementById('fechaP-libro').value,
-        genero_libro: document.getElementById('genero-libro').value,
-        Disponibilidad_libro: document.getElementById('disponibilidad-libro').value,
-        paginasN_libro: document.getElementById('paginasN-libro').value
-    };
-    db.collection("Libros").doc(id).update(libroActualizado).then(() => {
-        $('#updateModal').modal('hide');
-        alert("Datos actualizados correctamente");
-        verTabla();
-    }).catch((error) => {
-        console.error("Error al actualizar el libro: ", error);
-    });
-}
-
-function deleteLibro(id) {
-    db.collection("Libros").doc(id).delete().then(() => {
-        verTabla();
-    }).catch((error) => {
-        console.error("Error al eliminar el libro: ", error);
-    });
-}
-
-function btclose()
-{
-    $('#updateModal').modal('hide');
-}
 </script>
 
 
 
 
-<!-- Funciones js--> 
+
+
+    
+</body>
+<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
 </html>
