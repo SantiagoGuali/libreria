@@ -13,25 +13,7 @@
 <style>
 </style>
 <body>
-    <script>
-        // TODO: Replace the following with your app's Firebase project configuration
-// See: https://support.google.com/firebase/answer/7015592
-const firebaseConfig = {
-  apiKey: "AIzaSyCBKAkgixaP9ILHs_jZ3z6PK1eCoVHAP6w",
-  authDomain: "libreria-1768a.firebaseapp.com",
-  projectId: "libreria-1768a",
-  storageBucket: "libreria-1768a.appspot.com",
-  messagingSenderId: "1086861662717",
-  appId: "1:1086861662717:web:52aa999b3235e2a5da6194"
-  };
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-
-// Initialize Cloud Firestore and get a reference to the service
-const db = firebase.firestore();
-
-    </script>
+  
     <div style="background-color: black; height: 100px; margin-left: 0%; margin-right: 0%;">
         <div class="row">
             <div class="col-md-1" style="margin-left: 5%;">
@@ -203,6 +185,34 @@ const db = firebase.firestore();
 </div>
 </div>
     
+
+    
+</body>
+<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+<script src="/js/config.js"></script>
+<script src="/js/guarda.js"></script>
+
+<script>
+    // TODO: Replace the following with your app's Firebase project configuration
+// See: https://support.google.com/firebase/answer/7015592
+const firebaseConfig = {
+apiKey: "AIzaSyCBKAkgixaP9ILHs_jZ3z6PK1eCoVHAP6w",
+authDomain: "libreria-1768a.firebaseapp.com",
+projectId: "libreria-1768a",
+storageBucket: "libreria-1768a.appspot.com",
+messagingSenderId: "1086861662717",
+appId: "1:1086861662717:web:52aa999b3235e2a5da6194"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = firebase.firestore();
+
+</script>
 <!-- -->
 
 <script>
@@ -350,11 +360,4 @@ function btclose()
 </script>
 
 <!-- -->
-    
-</body>
-<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
-<script src="/js/config.js"></script>
-<script src="/js/guarda.js"></script>
 </html>
