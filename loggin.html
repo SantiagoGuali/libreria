@@ -126,6 +126,18 @@ loggin.addEventListener('click', (e) => {
   });
 });
 
+const provider = new GoogleAuthProvider();
+
+logginG.addEventListener("click", async (e) => {
+    try {
+        const result = await signInWithPopup(auth, provider);
+
+        const user = result.user;
+        window.location.href = "https://santiagoguali.github.io/libreria/";
+    } catch (error) {
+        console.error("Error al iniciar sesión con Google:", error);
+    }
+});
 
 cerrar.addEventListener("click", (e) =>{
   auth.singOut().then(()=> {
