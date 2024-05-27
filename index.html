@@ -126,16 +126,7 @@ loggin.addEventListener('click', (e) => {
   });
 });
 
-logginG.addEventListener("click", async (e) => {
-    try {
-        const result = await signInWithPopup(auth, provider);
 
-        const user = result.user;
-        window.location.href = "inicio.html";
-    } catch (error) {
-        console.error("Error al iniciar sesión con Google:", error);
-    }
-});
 
 cerrar.addEventListener("click", (e) =>{
   auth.singOut().then(()=> {
@@ -145,7 +136,7 @@ cerrar.addEventListener("click", (e) =>{
   })
 })
 </script>
-<script type="module" src="/js/auntenticacionG.js">
+<script type="module" src="js/auntenticacionG.js">
   
 </script>
 </html>
