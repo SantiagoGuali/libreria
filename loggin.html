@@ -135,15 +135,6 @@ cerrar.addEventListener("click", (e) =>{
   })
 })
 
-</script>
-
-
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
-const provider = new GoogleAuthProvider();
-
 logginG.addEventListener("click", async (e) => {
     try {
         const result = await signInWithPopup(auth, provider);
@@ -154,5 +145,6 @@ logginG.addEventListener("click", async (e) => {
         console.error("Error al iniciar sesión con Google:", error);
     }
 });
+
 </script>
 </html>
