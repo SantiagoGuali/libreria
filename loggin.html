@@ -134,17 +134,6 @@ cerrar.addEventListener("click", (e) =>{
       alert("Error al cerrar sesion")
   })
 })
-
-logginG.addEventListener("click", async (e) => {
-    try {
-        const result = await signInWithPopup(auth, provider);
-
-        const user = result.user;
-        window.location.href = "https://santiagoguali.github.io/libreria/";
-    } catch (error) {
-        console.error("Error al iniciar sesión con Google:", error);
-    }
-});
-
 </script>
+<script type="module" src="/js/auntenticacionG.js"></script>
 </html>
