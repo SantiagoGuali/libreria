@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>CRUD firebase</title>
+</head>
+<style>
+</style>
+<body>
+  
+    <div style="background-color: black; height: 100px; margin-left: 0%; margin-right: 0%;">
+        <div class="row">
+            <div class="col-md-1" style="margin-left: 5%;">
+                <img  style="width: 100px; height: 100px;" src="https://w7.pngwing.com/pngs/776/145/png-transparent-books-illustration-book-book-rectangle-presentation-desktop-wallpaper-thumbnail.png" alt="not found">
+            </div>
+            <div class="col-md-8">
+                <br>
+                <h1 style="color: white;">Libreria Gotitas del saber</h1>
+            </div>
+        </div>
+    </div>
+    <BR></BR>
+    <h1 style="margin-left: 5%;">Formulario</h1>
+    <form style="background-color: lightgrey; height: 600px; border-radius: 50px; margin-top: 2%; margin-left: 2%; margin-right: 2%;" action="#">
+        <br><br>
+        <div class="row" style="margin-left: 10%; margin-right: 10%;">
+            <div class="col-md-5">
+                <label for="">ID</label>
+                <input required type="text" class="form-control" placeholder="as46a8da1j" id="id_libro">
+                <br>
+                <label for="">Autor</label>
+                <input required type="text" class="form-control" placeholder="Oswaldo Wayasamin" id="autor_libro">
+                <br>
+                <label for="">Editorial</label>
+                <input required type="text" class="form-control" placeholder="Max Books" id="editorial_libro">
+                <br>
+                <select style="text-align: center;" class="form-control" name="" id="genero_libro">
+                    <option  value="">--Seleccionar Genero--</option>
+                    <option value="">Terror</option>
+                    <option value="">Fantasia</option>
+                    <option value="">Ciencia Ficción</option>
+                </select>
+                <br>
+                <select style="text-align: center;" class="form-control" name="" id="Disponibilidad_libro">
+                    <option value="">--Seleccionar Disponibilidad</option>
+                    <option value="">Ocuapado</option>
+                    <option value="">Desocupado</option>
+                </select>
+            </div>
+
+            <div class="col-md-5">
+                <label for="">Título</label>
+                <input required type="text" class="form-control" placeholder="La odisea" id="nombre_libro">
+                <br>
+                <label for="">Número de paginas</label>
+                <input required type="number" class="form-control" placeholder="255" id="paginasN_libro">
+                <br>
+                <label for="">Fecha de publicación</label>
+                <input required type="date" class="form-control" placeholder="28/10/2024" id="fechaP_libro">
+                <br>
+                <select style="text-align: center;" class="form-control" name="" id="Idioma">
+                    <option value="">--Seleccionar Idioma--</option>
+                    <option value="">Español</option>
+                    <option value="">Ingles</option>
+                    <option value="">Aleman</option>
+                </select>
+            </div>
+            <div class="col-md-2" style="text-align: right;">
+                <br><br>
+                <button type="submit" onclick="guardar(), verTabla();" style="width: 100px;" class="btn btn-outline-success">Guardar</button>
+                <br><br>
+                <button type="reset" style="width: 100px;"  class="btn btn-outline-info">Limpiar</button>
+                <br><br>
+                <!--<button onclick="search()" style="width: 100px;"  class="btn btn-outline-secondary">Consultar</button> -->
+
+                 <br><br>
+            </div>
+            <label for="">Descripción</label>
+            <textarea required placeholder="" name="" id="descripcion_libro" rows="5"></textarea>
+        </div>
+    </form>
+    <div >
+        <br><br>    
+        <h1 style="margin-left: 5%;">Catalogo de Libros</h1>
+        <div class="container mt-5">
+            <table style="border-radius: 50px;" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Autor</th>
+                        <th>Idioma</th>
+                        <th>Descripción</th>
+                        <th>Editorial</th>
+                        <th>Fecha de Publicación</th>
+                        <th>Género</th>
+                        <th>Disponibilidad</th>
+                        <th>Páginas</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="libros-tbody">
+                </tbody>
+            </table>
+            <br><br>
+        </div>
+    
+        <script>
+            document.addEventListener('DOMContentLoaded', function ()  {
+                window.deleteLibro = function(id) {
+                    db.collection("Libros").doc(id).delete().then(() => {
+                        alert("Eliminado Correctamente");
+                        verTabla();;
+                    }).catch((error) => {
+                        console.error(error);
+                    });
+                }
+                verTabla();
+            });
+        </script>
+
+
+
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div style="background-color: lightgrey;" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Actualizar Libro</h5>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="libro-form">
+                    <input type="hidden" id="libro-id">
+                    <div class="form-group">
+                        <label for="nombre-libro">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre-libro">
+                    </div>
+                    <div class="form-group">
+                        <label for="autor-libro">Autor:</label>
+                        <input type="text" class="form-control" id="autor-libro">
+                    </div>
+                    <div class="form-group">
+                        <label for="idioma-libro">Idioma:</label>
+                        <input type="text" class="form-control" id="idioma-libro">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion-libro">Descripción:</label>
+                        <input type="text" class="form-control" id="descripcion-libro">
+                    </div>
+                    <div class="form-group">
+                        <label for="editorial-libro">Editorial:</label>
+                        <input type="text" class="form-control" id="editorial-libro">
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaP-libro">Fecha de Publicación:</label>
+                        <input type="date" class="form-control" id="fechaP-libro">
+                    </div>
+                    <div class="form-group">
+                        <label for="genero-libro">Género:</label>
+                        <input type="text" class="form-control" id="genero-libro">
+                    </div>
+                    <div class="form-group">
+                        <label for="disponibilidad-libro">Disponibilidad:</label>
+                        <input type="text" class="form-control" id="disponibilidad-libro">
+                    </div>
+                    <div class="form-group">
+                        <label for="paginasN-libro">Número de Páginas:</label>
+                        <input type="number" class="form-control" id="paginasN-libro">
+                    </div>
+                    <br>
+                    <div style="text-align: center;">
+                        <button type="button" class="btn btn-outline-dark" onclick="updateLibro()">Actualizar</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+    
+
+    
+</body>
+<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+<script src="/js/config.js"></script>
+<script src="/js/guarda.js"></script>
+
+<script>
+    // TODO: Replace the following with your app's Firebase project configuration
+// See: https://support.google.com/firebase/answer/7015592
+const firebaseConfig = {
+apiKey: "AIzaSyCBKAkgixaP9ILHs_jZ3z6PK1eCoVHAP6w",
+authDomain: "libreria-1768a.firebaseapp.com",
+projectId: "libreria-1768a",
+storageBucket: "libreria-1768a.appspot.com",
+messagingSenderId: "1086861662717",
+appId: "1:1086861662717:web:52aa999b3235e2a5da6194"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = firebase.firestore();
+
+</script>
+<!-- -->
+
+<script>
+    function guardar()
+{
+    var combogen = document.getElementById("genero_libro");
+    var combodis = document.getElementById("Disponibilidad_libro");
+    var comboidi = document.getElementById("Idioma");
+
+    db.collection("Libros").add
+    ({
+        id_libro: document.getElementById("id_libro").value,
+        autor_libro: document.getElementById("autor_libro").value,
+        editorial_libro: document.getElementById("editorial_libro").value,
+        genero_libro: combogen.options[combogen.selectedIndex].text,
+        Disponibilidad_libro: combodis.options[combodis.selectedIndex].text,
+        nombre_libro: document.getElementById("nombre_libro").value,
+        paginasN_libro: document.getElementById("paginasN_libro").value,
+        fechaP_libro: document.getElementById("fechaP_libro").value,
+        Idioma: comboidi.options[comboidi.selectedIndex].text,
+        descripcion_libro: document.getElementById("descripcion_libro").value,
+    })
+    .then((docRef) => {
+        alert("Guardado correctamente");
+        console.log("Document written with ID: ", docRef.id);
+    })
+    .catch((error) => {
+        alert("Error Guardar");
+        console.error("Error adding document: ", error);
+    });
+}
+
+
+// aun no funciona 
+function search()
+{
+    db.collection("Libros").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+
+            (document.getElementById('id_libro')).value = (`${doc.data().id_libro}`);
+            (document.getElementById('autor_libro')).value = (`${doc.data().autor_libro}`);
+            (document.getElementById('editorial_libro')).value = (`${doc.data().editorial_libro}`);
+            (document.getElementById('genero_libro')).value = (`${doc.data().genero_libro}`);
+            (document.getElementById('Disponibilidad_libro')).value = (`${doc.data().Disponibilidad_libro}`);
+            (document.getElementById('nombre_libro')).value = (`${doc.data().nombre_libro}`);
+            (document.getElementById('paginasN_libro')).value = (`${doc.data().paginasN_libro}`);
+            (document.getElementById('fechaP_libro')).value = (`${doc.data().fechaP_libro}`);
+            (document.getElementById('Idioma')).value = (`${doc.data().Idioma}`);
+            (document.getElementById('descripcion_libro')).value = (`${doc.data().des}`);
+        });
+    });
+}
+
+
+function verTabla() {
+    db.collection("Libros").get().then((querySnapshot) => {
+        const librosTbody = document.getElementById('libros-tbody');
+        librosTbody.innerHTML = '';
+        querySnapshot.forEach((doc) => {
+            const libro = doc.data();
+            const libroRow = document.createElement('tr');
+            libroRow.innerHTML = `
+                <td>${libro.nombre_libro}</td>
+                <td>${libro.autor_libro}</td>
+                <td>${libro.Idioma}</td>
+                <td>${libro.descripcion_libro}</td>
+                <td>${libro.editorial_libro}</td>
+                <td>${libro.fechaP_libro}</td>
+                <td>${libro.genero_libro}</td>
+                <td>${libro.Disponibilidad_libro}</td>
+                <td>${libro.paginasN_libro}</td>
+                <td>
+                    <button class="btn btn-outline-danger btn-sm" onclick="deleteLibro('${doc.id}')">Eliminar</button>
+                   
+                </td>
+                <td><button class="btn btn-outline-success btn-sm" onclick="editLibro('${doc.id}')">Actualizar</button></td>
+                
+            `;
+            librosTbody.appendChild(libroRow);
+        });
+    });
+}
+
+
+
+function editLibro(id) {
+    const libroDoc = db.collection("Libros").doc(id);
+    libroDoc.get().then((doc) => {
+        if (doc.exists) {
+            const libro = doc.data();
+            document.getElementById('libro-id').value = id;
+            document.getElementById('nombre-libro').value = libro.nombre_libro;
+            document.getElementById('autor-libro').value = libro.autor_libro;
+            document.getElementById('idioma-libro').value = libro.Idioma;
+            document.getElementById('descripcion-libro').value = libro.descripcion_libro;
+            document.getElementById('editorial-libro').value = libro.editorial_libro;
+            document.getElementById('fechaP-libro').value = libro.fechaP_libro;
+            document.getElementById('genero-libro').value = libro.genero_libro;
+            document.getElementById('disponibilidad-libro').value = libro.Disponibilidad_libro;
+            document.getElementById('paginasN-libro').value = libro.paginasN_libro;
+            $('#updateModal').modal('show');
+             
+        }
+    });
+}
+
+
+function updateLibro() {
+    const id = document.getElementById('libro-id').value;
+    const libroActualizado = {
+        nombre_libro: document.getElementById('nombre-libro').value,
+        autor_libro: document.getElementById('autor-libro').value,
+        Idioma: document.getElementById('idioma-libro').value,
+        descripcion_libro: document.getElementById('descripcion-libro').value,
+        editorial_libro: document.getElementById('editorial-libro').value,
+        fechaP_libro: document.getElementById('fechaP-libro').value,
+        genero_libro: document.getElementById('genero-libro').value,
+        Disponibilidad_libro: document.getElementById('disponibilidad-libro').value,
+        paginasN_libro: document.getElementById('paginasN-libro').value
+    };
+    db.collection("Libros").doc(id).update(libroActualizado).then(() => {
+        $('#updateModal').modal('hide');
+        alert("Datos actualizados correctamente");
+        verTabla();
+    }).catch((error) => {
+        console.error("Error al actualizar el libro: ", error);
+    });
+}
+
+function deleteLibro(id) {
+    db.collection("Libros").doc(id).delete().then(() => {
+        verTabla();
+    }).catch((error) => {
+        console.error("Error al eliminar el libro: ", error);
+    });
+}
+
+function btclose()
+{
+    $('#updateModal').modal('hide');
+}
+
+
+
+</script>
+
+<!-- -->
+</html>
