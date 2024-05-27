@@ -19,7 +19,7 @@ logginG.addEventListener("click", async (e) => {
         const result = await signInWithPopup(auth, provider);
 
         const user = result.user;
-        window.location.href = "https://santiagoguali.github.io/libreria/";
+        window.location.href = "inicio.html";
     } catch (error) {
         console.error("Error al iniciar sesión con Google:", error);
     }
